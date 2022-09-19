@@ -1,32 +1,32 @@
 # Site settings
-title: Klise Theme # site title
+title: A quarter in the life # site title
 description: >- # site description
-  He's writing in Bahasa about web technology and experience as a journal 
-  for documentation things that he learned, meet him <a href="https://github.com/piharpi" target="_blank" rel="noopener">@github</a>.
+  He's a DevOps developer, journaling success and failure from Costa Rica as personal log. Spanish and English speaker has a <a href="" target="blank_" rel="noopener">
+  digital security educational IG profile</a>. DM him if interested in english content.
 lang: en-US # default lang
-timezone: Asia/Jakarta # set your timezone
+timezone: America/Costa_Rica # set your timezone
 image: assets/img/ogp.png # This image used for Open Graph more info https://ogp.me/
-repo: https://github.com/piharpi/jekyll-klise # site repo [optional]
+repo: https://github.com/maravfe/maravfe.github.io # site repo [optional]
 mode: dark # default theme "dark" | "light"
 
 # Profile settings
 author:
-  name: Jekyll Klisé # author name
+  name: Marcello Avila # author name
   bio: >- # tell to the world
-    The minimalist Jekyll theme, light and dark mode support, for running a personal site and blog, 
-    meet Klisé theme at <a href="https://github.com/piharpi/jekyll-klise" target="_blank" rel="noopener">@github</a>.
-  username: username # general username
-  github: github_username # github username
-  twitter: twitter_username # twitter username
-  facebook: facebook_username # facebook username
+    He's a developer, journaling success and failure experiences from Costa Rica as personal log. Promoter of <a href="https://www.instagram.com/maravfe/" target="blank_" rel="noopener">
+    consumer digital security</a>.
+  username: maravfe # general username
+  github: maravfe # github username
+  twitter: a # twitter username
+  facebook: email # facebook username
   email: your-email@email.com # email adress
   avatar: /assets/img/avatar.jpg # change with your own avatar
 
 # URL settings
-url: "https://klise.now.sh" #
+url: "https://marcelloavila.com" #
 baseurl:
 permalink: /:title/
-google_analytics: # leave it blank if not wish
+google_analytics: G-601BW3FDNS # leave it blank if not wish
 fb_appid:
 
 # Collection setting
@@ -60,7 +60,7 @@ jekyll_compose:
     description:
 
 # Homepage limit posts
-number_of_posts: 5
+number_of_posts: 7
 
 # Build settings
 # theme: klise
