@@ -1,18 +1,18 @@
 ---
-title: Colophon
+title: About
 permalink: /about/
 layout: page
-excerpt: Hello peeps, I'm student of computer science from Banyuwangi, living in Jogjakarta. This blog for documentation about my programming journey, running on jekyll, hosting on netlify and using my own simple theme.
+excerpt: I'm a software developer from Costa Rica, interested in consumer IT security approach. I educate the average John Doe in how to be safer on the internet. But this blog is where I document my own research and experiments.
 comments: false
 ---
 
-He's a student from Banyuwangi, living in Jogjakarta. the blog for documentation about his programming 🎒 journey, running on jekyll, hosting on [now.sh](http://now.sh) and using his own theme, he name it <a href="https://github.com/piharpi/jekyll-klise" target="_blank" rel="noopener">klisé</a>, he also loves to learning web technology; but he often forgot, that a reason why him doing the writing.
+I'm a software developer from Costa Rica, interested in consumer IT security approach. I educate the average John Doe in how to be safer on the internet. But this blog is where I document my own research and experiments.
 
-If you have a question about him or else, just send a letter to him.
+Hopefully some people can read and share this knowledge around the world. It does sound like an interesting outcome. For now, just be welcome and learn away.
 
-You can [report](http://github.com/piharpi/jekyll-klise/issues/new) if there is an broken link(s) or somethings else.
+Please [report here](http://github.com/maravfe/blog/issues/new) if there is any broken link(s) or anything else.
 
-**may u needs ✨**
+**always happy to connect**
 
-- {{ site.author.email }}
-- github.com/{{ site.author.github }}
+- <a target="_blank" rel="noopener" href="https://twitter.com/{{ site.author.twitter }}">twitter.com/{{ site.author.twitter }}</a>
+- <a target="_blank" rel="noopener" href="https://github.com/{{ site.author.github }}">github.com/{{ site.author.github }}</a>

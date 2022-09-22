@@ -1,8 +1,7 @@
 # Site settings
 title: A quarter in the life # site title
 description: >- # site description
-  He's a DevOps developer, journaling success and failure from Costa Rica as personal log. Spanish and English speaker has a <a href="" target="blank_" rel="noopener">
-  digital security educational IG profile</a>. DM him if interested in english content.
+  He's a developer, journaling success and failure experiences from Costa Rica as personal log. Promoter of consumer digital security.
 lang: en-US # default lang
 timezone: America/Costa_Rica # set your timezone
 image: assets/img/ogp.png # This image used for Open Graph more info https://ogp.me/
@@ -17,13 +16,13 @@ author:
     consumer digital security</a>.
   username: maravfe # general username
   github: maravfe # github username
-  twitter: a # twitter username
+  twitter: blog_marcello # twitter username
   facebook: email # facebook username
-  email: your-email@email.com # email adress
+  email: # email adress
   avatar: /assets/img/avatar.jpg # change with your own avatar
 
 # URL settings
-url: "https://marcelloavila.com" #
+url: "blog-marcelloavila.vercel.app" #
 baseurl:
 permalink: /:title/
 google_analytics: G-601BW3FDNS # leave it blank if not wish

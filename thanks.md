@@ -2,12 +2,12 @@
 title: Acknowledgment
 permalink: /thanks/
 layout: page
-excerpt: Thanks to amazing people that i met, who help me out from follishness, connecting me with another good person, giving some advice when i'm at a bad things, pulling me from ordinary to be great.
+excerpt: Thanks for all the good and bad experiences any acquaintance has provided me. Every opportunity is a learning opportunity and they all fuel me to write and share my experience.
 comments: false
 ---
 
-Thanks to amazing people that i met, who help me out from follishness, connecting me with another good person, giving some advice when i'm at a bad things, pulling me from ordinary to be great.
+<strong>Thanks</strong> for all the good and bad experiences any acquaintance has provided me. Every opportunity is a learning opportunity and they all fuel me to write and share my experiences.
 
 <hr>
 
-Hopefully the knowledge that I got from them can be useful, and become a charity for them, Aamiin.
+Hopefully the knowledge that I got from them can be useful, and motivate others to be great. And yes, I'm talking to you. Drop any advise or comments to my DM too: <a href="https://twitter.com/{{site.author.twitter}}" rel="noopener" target="_blank"> twitter.com/{{site.author.twitter}}
