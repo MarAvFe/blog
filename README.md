@@ -24,6 +24,9 @@ Navigate to `localhost:4000`. You're Welcome, Fork and be Stargazer.
 
 [![Deployed with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/maravfe/blog)
 
+## Guidelines
+
+- [Image sizes](https://imagesuggest.com/blog/blog-post-image-size/)
 
 ## License
 
