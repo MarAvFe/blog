@@ -10,7 +10,7 @@ I'm a software developer from Costa Rica, interested in consumer IT security app
 
 Hopefully some people can read and share this knowledge around the world. It does sound like an interesting outcome. For now, just be welcome and learn away.
 
-Please [report here](http://github.com/maravfe/blog/issues/new) if there is any broken link(s) or anything else.
+Please [report here](http://github.com/maravfe/blog/issues/new/choose) if there is any broken link(s) or anything else.
 
 **always happy to connect**
 
