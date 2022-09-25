@@ -9,7 +9,7 @@ excerpt: Articles sorted by tags.
   <a class="tag-item" href="#">all</a>
   {%- for tag in site.tags -%}
   {% capture name %}{{ tag | first }}{% endcapture %}
-  <a class="tag-item" href="#{{name}}">{{ name }}</a>
+  <a class="tag-item" href="#{{ name }}">{{ name }}</a>
   {%- endfor -%}
 </div>
 
