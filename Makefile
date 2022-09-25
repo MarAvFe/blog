@@ -10,4 +10,4 @@ clean:
 	rm -rf _site
 
 deploy: _site
-	git push origin draft | grep "Everything up-to-date" || echo -e "\nNOTHING TO DEPLOY! run: git add . && git commit -S -m ''"
+	git push origin draft | grep "Everything up-to-date" 2> /dev/null || printf "\nNOTHING TO DEPLOY! run: git add . && git commit -S -m ''\n"

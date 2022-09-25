@@ -24,7 +24,7 @@ author:
 # URL settings
 url: "blog.marcelloavila.com" #
 baseurl: 
-permalink: /:year:month:day/:title/
+permalink: /:year/:month/:day/:title/
 google_analytics: G-601BW3FDNS # leave it blank if not wish
 fb_appid:
 
