@@ -12,3 +12,23 @@ home: true
   </h4>
 </article>
 {%- endfor -%}
+
+<h3>Projects</h3>
+<article class="post-item">
+  <span class="post-item-date">quit:</span>
+  <h4 class="post-item-title">
+    <a href="https://github.com/MarAvFe/quit">I QUIT (QUick Image Tagger) to keep cluttered screenshots and Pictures
+      folder. I want to
+      easily and safely view and mark my images for deletion.</a>
+  </h4>
+</article>
+
+{%- if jekyll.environment != "production" %}
+<h3>Values</h3>
+<article class="post-item">
+  <h4 class="post-item-title">Value 1</h4>
+</article>
+<article class="post-item">
+  <h4 class="post-item-title">Value 2</h4>
+</article>
+{%- endif -%}
