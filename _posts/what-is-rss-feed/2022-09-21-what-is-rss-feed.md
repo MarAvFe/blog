@@ -15,7 +15,7 @@ But now, I'm noticing something funny, this template has this funny feature of R
 ## RSS Feed
 
 <figure>
-<img src="/what-is-rss-feed/rss-logo.png" alt="RSS Logo">
+<img src="{{page.url}}/rss-logo.png" alt="RSS Logo">
 <figcaption>RSS Logo</figcaption>
 </figure>
 
