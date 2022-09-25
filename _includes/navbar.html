@@ -1,5 +1,4 @@
-<div class="navbar" role="navigation" {%- if jekyll.environment !="production" %}
-  style="background-color:rgb(209, 0, 0);" {%- endif -%}>
+<div class="navbar" role="navigation">
   <nav class="menu">
     <input type="checkbox" id="menu-trigger" class="menu-trigger" />
     <label for="menu-trigger">
@@ -45,8 +44,6 @@
     </a>
     <div class="trigger">
       <div class="trigger-container">
-        {%- if jekyll.environment != "production" %}<a style="color: red;" class="menu-link" href="#">-- DRAFT BLOG
-          --</a>{%- endif -%}
         {%- assign url = page.url -%}
         {%- assign menus = site.data.menus -%}
         {%- if menus %}
