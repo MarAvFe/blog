@@ -2,9 +2,6 @@
 JEKYLL = bundle exec jekyll
 SITE = _site
 
-test:
-	echo ${ENCKEY}
-
 default: localserve encrypt
 
 localserve:
