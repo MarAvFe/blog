@@ -1,13 +1,28 @@
-default: localserve
+#!make
+JEKYLL = bundle exec jekyll
+SITE = _site
 
-build:
-	bundle exec jekyll build
+test:
+	echo ${ENCKEY}
+
+default: localserve encrypt
 
 localserve:
-	bundle exec jekyll serve
+	${JEKYLL} serve
 
-clean:
-	rm -rf _site
+clean: ${SITE}
+	rm -rf ${SITE}
 
-deploy: _site
+build:
+	${JEKYLL} build
+
+encrypt:
+	find ${SITE} -type f -path "*-locked*" -exec npx staticrypt {} "${ENCKEY}" -o {} -r 5 -t "Members only!" \;
+
+release: build encrypt
+
+deploy: ${SITE}
 	git push origin draft | grep "Everything up-to-date" 2> /dev/null || printf "\nNOTHING TO DEPLOY! run: git add . && git commit -S -m ''\n"
+
+localdeploy: release ${SITE}
+	sudo cp -r ${SITE}/* /var/www/html/
