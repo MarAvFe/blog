@@ -19,7 +19,7 @@ encrypt:
 release: build encrypt
 
 deploy: ${SITE}
-	git push origin draft | grep "Everything up-to-date" 2> /dev/null || printf "\nNOTHING TO DEPLOY! run: git add . && git commit -S -m ''\n"
+	git push origin draft | grep "Everything up-to-date" 2> /dev/null && printf "All done!" || printf "\nNOTHING TO DEPLOY! run: git add . && git commit -S -m ''\n"
 
 localdeploy: release ${SITE}
 	sudo cp -r ${SITE}/* /var/www/html/
