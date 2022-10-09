@@ -3,6 +3,7 @@ layout: post
 title:  "Hotfix 1: Affecting 100 users"
 date:   2022-10-06 22:30:20 -0600
 categories: story experience mistakes hotfix
+locked: true
 ---
 
 This is a story. You'll notice it's numbered because I'm 100% sure this is not my last mistake.
