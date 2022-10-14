@@ -17,14 +17,14 @@ author:
   username: maravfe # general username
   github: maravfe # github username
   twitter: blog_marcello # twitter username
-  facebook: email # facebook username
+  facebook: # facebook username
   email: # email adress
   avatar: /assets/img/avatar.jpg # change with your own avatar
 
 # URL settings
 url: "blog.marcelloavila.com" #
 baseurl: 
-permalink: /:year/:month/:day/:title/
+permalink: /:year:month:day/:title/
 google_analytics: G-601BW3FDNS # leave it blank if not wish
 fb_appid:
 

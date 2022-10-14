@@ -6,11 +6,15 @@ categories: story experience mistakes hotfix
 locked: true
 ---
 
+# Context
+
 This is a story. You'll notice it's numbered because I'm 100% sure this is not my last mistake.
 
 For legal reasons, this is hypothetical.
 
 There I was, supporting a Source Control Management (SCM) management tool with +3500 users for a corporation, where we add and remove any required or inactive users. The removal is automatical and runs daily, the addition is automatical and runs twice a day. Everything works like a clock.
+
+# Incident
 
 We had this unusual time where a user was getting removed needlesly and recurrently. They lacked some data in our DB and our automatical job interpreted it as an inactive user. We asked them to update their details but they failed to do so. We then yielded the user incomplete status and agreed to add an exception for them, first mistake. Maybe sticking to policy and forcing users to comply would've avoided this situation?
 
@@ -61,13 +65,13 @@ I quickly commit and push, but I disable the automatic execution and get to the 
 
 I worked quickly with some API scripts up my sleeve. I invited all users back within the first 40 minutes and finished restoring (partially) repositories and teams accesses within the next 7 hours. Then we proceeded to manage users expectations and communicate our incident to the company. 8 work hours or intense remediation and potential 6 figure impact, for a lack of a 5 minute peer reviewing process. Is it worth it? I guess it is.
 
-## Lessons learned
+# Lessons learned
 
-### Test cases
+## 1. Test cases
 
 Even though this happened in our CICD pipeline execution, it would've happened in my local environment, as we had no test cases defined within the script. Not unit tests, not tes values, nothing. Any way of testing would'be caught this quickly.
 
-### Feature flags
+## 2. Feature flags
 
 You can enable or disable tools behavior by modifying its environments with variables. You can also simply choose to prod-execute a process if current git branch is `main`. Else, just do a test run and show us the output. Example:
 
@@ -89,13 +93,41 @@ for user in users:
     print(f'disabled user {user}')
 ```
 
-### User's expectations
+## 3. Data restore capability
+
+Why did we take 7 hours to restore accesses and not 10 minutes? Because we had not considered a massive restoral before. We were capable to restore by scraping historical data and it worked successfully.
+
+Always consider what happened if you lost everything in prod environment, how will you restore? How can you backup? In this example, this is not a simple Hard Disk Drive (HDD) screenshot copy/paste. You can simply re-create the full set of permissions by having an incremental set of executed actions and then keeping the last version, then you execute this result.
+
+How can you restore a data-based environment? Open to creativity.
+
+## 4. User's expectations
 
 Most of the time, users don't need fixes as urgently as we think or they mention. They simply need to know when will they be back working to adjust accordingly, people understand there are outages and mistakes in dev teams. Just don't lie to them and they'll appreciate it. At first we told users access had been fully restored, which was misleading: they still needed to take action from their side to restore the access, to accept the invite. Our biggest backlash was the sharing of misleading solutions and information. Most users were simply interested in recovering access than pionting fingers.
 
-### Gitflow
+## 5. Gitflow
 
-[This is simple and straightforward][gitflow]. Still, lots of teams (as mine) skip to enforce the peer reviewing processes
+Peer review and stage test new features before releasing. [This is simple and straightforward][gitflow]. Still, lots of teams skip the enforcement of peer reviewing processes. Simply put:
+
+> It's a Git branching model that involves the use of feature branches and multiple primary branches.
+
+However, at press time I noticed a new current of [trunk-based workflow](trunkbase) has emerged. How is it different from Gitflow?
+
+> Gitflow has more, longer-lived branches and larger commits than trunk-based development [...] [which] focuses on the main branch as the source of fixes and releases.
+
+# Closure
+
+About 5 users reached out within the first hour, and about 58 customers replied after 3 days or never did. Here's the response rate of these affected users.
+
+<figure>
+<img src="{{page.url}}response.png" alt="column chart">
+<figcaption>Affected users response</figcaption>
+</figure>
+
+Worth noting, most users didn't even feel the incident. But a few critical users are enough to trigger a full postmortem analysis and a chain reaction into processes improvement.
+
+Support management is still part of the service availability and customers perceived support product value.
 
 [pandas]: https://pandas.pydata.org/
 [gitflow]: https://www.atlassian.com/git/tutorials/comparing-workflows/gitflow-workflow
+[trunkbase]: https://www.atlassian.com/continuous-delivery/continuous-integration/trunk-based-development
