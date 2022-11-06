@@ -2,7 +2,7 @@
 JEKYLL = bundle exec jekyll
 SITE = _site
 
-default: localserve encrypt
+default: localserve
 
 localserve:
 	${JEKYLL} serve
@@ -14,7 +14,7 @@ build:
 	${JEKYLL} build
 
 encrypt:
-	find ${SITE} -type f -path "*-locked*" -name "*.html" -exec npx staticrypt {} "${ENCKEY}" -o {} -r 5 -t "Protected post" --passphrase-placeholder "Password" --decrypt-button ENTER -f _data/password_template.html \;
+	find ${SITE} -type f -path "*-locked*" -name "*.html" -exec npx staticrypt {} "${ENCKEY}" -o {} -r 5 -t "Protected post" --passphrase-placeholder "Password" --decrypt-button ENTER \;
 
 release: build encrypt
 
