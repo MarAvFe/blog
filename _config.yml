@@ -17,7 +17,7 @@ author:
   username: maravfe # general username
   github: maravfe # github username
   twitter: blog_marcello # twitter username
-  facebook: email # facebook username
+  facebook: # facebook username
   email: # email adress
   avatar: /assets/img/avatar.jpg # change with your own avatar
 
@@ -83,6 +83,7 @@ exclude:
   - lighthouse.png
   - klise-*.gem
   - klise.gemspec
+  - node_modules
 
 # Plugins
 plugins:
