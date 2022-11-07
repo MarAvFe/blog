@@ -3,7 +3,7 @@ layout: post
 title: "What is RSS feed?"
 date: 2022-09-21 23:50:20 -0600
 modified: 2022-09-22 18:21:20 -0600
-tags: [blogging, rss, tool]
+categories: blogging rss tool
 description: I learn and explain what is and how to use RSS Feeds
 excerpt: I learn and explain what is and how to use RSS Feeds
 ---
