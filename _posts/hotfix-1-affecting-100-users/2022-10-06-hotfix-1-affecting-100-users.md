@@ -3,7 +3,6 @@ layout: post
 title:  "Hotfix 1: Affecting 100 users"
 date:   2022-10-06 22:30:20 -0600
 categories: story experience mistakes hotfix
-locked: true
 ---
 
 # Context
@@ -111,7 +110,7 @@ Peer review and stage test new features before releasing. [This is simple and st
 
 > It's a Git branching model that involves the use of feature branches and multiple primary branches.
 
-However, at press time I noticed a new current of [trunk-based workflow](trunkbase) has emerged. How is it different from Gitflow?
+However, at press time I noticed a new current of [trunk-based workflow][trunkbase] has emerged. How is it different from Gitflow?
 
 > Gitflow has more, longer-lived branches and larger commits than trunk-based development [...] [which] focuses on the main branch as the source of fixes and releases.
 
