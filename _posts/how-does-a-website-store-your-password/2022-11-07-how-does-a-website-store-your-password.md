@@ -2,6 +2,7 @@
 layout: post
 title: "How does a website store your password?"
 date: 2022-11-07 08:00:20 -0600
+modified: 2022-11-08 08:50:20 -0600
 categories: security password learning
 ---
 
@@ -115,7 +116,7 @@ Correct
 userPass(Gustavo) == generatedPass(pxc3) --> saf3 == saf3
 
 Incorrect
-userPass(Gustavo) == generatedPass(wrong) --> saf3 == tolkd
+userPass(Gustavo) == generatedPass(wrong) --> saf3 != tolkd
 ```
 
 At this point, websites used to send your password to your email if you forgot it.
@@ -154,7 +155,7 @@ Sure, we cannot straight recover `saf3` from the stored `54` password. However, 
 
 Several passwords generating the same hash is possible and it's called a **collision**. Any irreversible function has these. However, our `irrev3(x)` is a weak hash function because it's very easy to find a collision, just any string with 3 letters and 1 number. Even if we keep our hash function definition a secret, attackers' software can test and access our platform by bruteforcing.
 
-> [Brute force][bruteforce]: try out numerous [random] password combinations
+> [Brute force][bruteforce]: try out numerous [often random] password combinations
 
 But there's no need to break our heads around designing a secure hash function as there are readily available functions we can borrow ([md5][], [sha1][], [sha256][]). These algorithms are designed to generate a fixed number of evenly distributed combinations across `+2^60` possibilities. We will use the Secure Hash Algorithm 1 ([sha1][]). 
 
@@ -163,6 +164,8 @@ But there's no need to break our heads around designing a secure hash function a
                                                                    1 million --^
 ```
 
+> You can generate your own SHA1 codes in duckduckgo search bar: [sha1(tryitnow)][tryhash]
+
 Gustavo's new password will be `SHA1(saf3) = 194e371503f625b8f93aa34ccc50e9d4d37be4c3`. Let's insert it into our database
 
 ```sql
@@ -170,22 +173,23 @@ INSERT INTO User (Username, Password, Song)
 VALUES ("Gustavo", "194e371503f625b8f93aa34ccc50e9d4d37be4c3", "You'll be in my heart");
 ```
 
-## 4. Salt: What if the attacker can remember common passwords
+## 4. Salt: What if the attacker can remember common passwords?
 
-Of course attackers don't have that kind of memory, but they can create a dictionary file. As a deterministic algorithm, `SHA1(1234)` will always be `7110eda4d09e062aa5e4a390b0a572ac0d2c0220`, therefore a common dictionary will be:
+Of course human attackers don't have that kind of memory, but they can create a dictionary file (text file, basically). As sha1 is a deterministic algorithm, `SHA1(mypassword)` will always be `91dfd9ddb4198affc5c194cd8ce6d338fde470e2`, therefore a common dictionary will be:
 
 ```csv
-password  key
---------+----------------------------------------
-1234      7110eda4d09e062aa5e4a390b0a572ac0d2c0220
-password  5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8
-fluffy    d9d71ab718931a89de1e986bc62f6c988ddc1813
-john      a51dda7c7ff50b61eaea0444371f4a6a9301e501
+password    key
+----------+-----------------------------------------
+1234        7110eda4d09e062aa5e4a390b0a572ac0d2c0220
+mypassword  91dfd9ddb4198affc5c194cd8ce6d338fde470e2
+password    5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8
+fluffy      d9d71ab718931a89de1e986bc62f6c988ddc1813
+john        a51dda7c7ff50b61eaea0444371f4a6a9301e501
 ```
 
 If an attacker breaches any database of any website using SHA1 (or any common function) and gets their hands on hash `d9d71ab718931a89de1e986bc62f6c988ddc1813`, they can quickly check their dictionary and know that the password is `fluffy`. Then use this password and try it in every other website this user has created an account: fb, ig, google, banks, etc.
 
-To avoid this concept, we use a **salt**. A salt is a set of random characters, appended to the password before the hash function is applied.
+To avoid this attack method, we use a **salt**. A salt is a set of random characters, appended to the password before the hash function is applied.
 
 Let's callback our `irrev3(x)` function. And define function `salted(x)` as a function that appends 3 random characters to the password `x` and executes `irrev3(x)` to the result: `salted(x) = irrev3(x + random(3))`. One example execution of `salted(saf3)` is:
 
@@ -217,6 +221,18 @@ VALUES ("Gustavo", "192", "asd", "You'll be in my heart");
 
 If the password `saf3` were stored again, due to the salt being random, even if the attacker has a dictionary with `192 = saf3asd`, they would be unable to retrieve the correct password. And the hashed password would not match with another website hash.
 
+---
+
+Another example execution of `salted(saf3)`. This time, random salt is `15g`
+
+```
+salted(saf3) = irrev3(saf3 + random(3))
+salted(saf3) = irrev3(saf3 + 15g)
+salted(saf3) = irrev3(saf315g)
+salted(saf3) = 2x2x2x3x3x3x2
+salted(saf3) = 432
+```
+
 # Conclusion
 
 Now you know there are incredibly safe ways to store passwords. Password security goes further than having a randomly generated password `6ZxpQ)Af-s90S7q`.
@@ -227,4 +243,5 @@ But still, do you know how does each website store your password? You don't. You
 [sha1]: https://en.wikipedia.org/wiki/SHA-1
 [sha256]: https://en.wikipedia.org/wiki/SHA-2
 [ccipher]: https://en.wikipedia.org/wiki/Caesar_cipher
+[tryhash]: https://duckduckgo.com/?q=sha1+tryitnow&t=brave&ia=answer
 [bruteforce]: https://www.imperva.com/learn/application-security/brute-force-attack/
