@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "How a website stores your password?"
+title: "How a website stores your password"
 date: 2022-11-07 08:00:20 -0600
 modified: 2022-11-08 08:50:20 -0600
 categories: security password learning
