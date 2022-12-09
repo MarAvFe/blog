@@ -2,7 +2,7 @@
 layout: post
 title:  "What is an onion domain?"
 date:   2022-11-11 22:32:20 -0600
-categories: security privacy
+tags: security privacy
 ---
 
 So recently a friend told me [one of his favorite websites went down][zlib-news]. At some point he mentioned he was able to still access the service via TOR browser, using an **onion domain**.

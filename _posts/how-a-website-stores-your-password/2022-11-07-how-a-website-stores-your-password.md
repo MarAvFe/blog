@@ -3,7 +3,7 @@ layout: post
 title: "How a website stores your password"
 date: 2022-11-07 08:00:20 -0600
 modified: 2022-11-08 08:50:20 -0600
-categories: security password learning
+tags: security password learning
 ---
 
 As far as a computer cares, us people could be monkeys or slugs on the other side of the keyboard. Based on "a complex intelectual test" of physically using a computer by typing into a keyboard the website name and our username, they can tell us apart from animals. We then added an extra security layer of having a secret word for computers to identify us apart from other humans.
