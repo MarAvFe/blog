@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "IA and Me"
-date: 2023-02-08 19:26:20 -0600
+title: "IA and Me - Exploring the Benefits of AI for Personal Security"
+date: 2023-02-08 22:16:20 -0600
 tags: ia ideas business
 ---
 
