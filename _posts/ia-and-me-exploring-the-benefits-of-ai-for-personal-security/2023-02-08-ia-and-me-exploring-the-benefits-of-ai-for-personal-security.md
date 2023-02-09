@@ -24,7 +24,7 @@ Some amazing features are that it has a memory, meaning you are not limited to a
 
 ## Example: 
 
-![chatgpt-eli5law.png](/home/marcello/Documents/osource/blog/_posts/ia-and-me-exploring-the-benefits-of-ai-for-personal-security/img/chatgpt-eli5law.png)
+<img src="{{page.url}}chatgpt-eli5law.png" alt="ChatGPT Prompt for best pronator sneakers">
 
 # Perspective
 
@@ -39,7 +39,7 @@ Search engines allow you to find live and indexed websites on the internet, usua
 
 And then match the description of these results and guess which will fit better to your feet. You'll find a sea of sneakers features for different brands where their naming is not standard and it becomes very difficult to understand and you end up asking a person, buying whichever looks better or choosing one that will not help. Usually pronator/supine articles are related to athletes or advanced runners. You may be able to find an article with this description but not a lot. With AI instead you can copy the full prompt and it will automatically gather data from several sources tailoring the data to your needs. 
 
-![chatgpt-sneakers.png](/home/marcello/Documents/osource/blog/_posts/ia-and-me-exploring-the-benefits-of-ai-for-personal-security/img/chatgpt-sneakers.png)
+<img src="{{page.url}}chatgpt-sneakers.png" alt="ChatGPT Prompt for best pronator sneakers">
 
 This gives you a rolling start into selecting the best sneakers focusing only into your case, avoiding the ad-full websites interested in selling as much as they want to you. You can do the test right now. Go and figure with your search engine the best sneakers for a pronator foot person for daily usage, it may take you a few minutes and that's expected. But it can also take you 1 minute with AI, [login here][cgptchat].
 
