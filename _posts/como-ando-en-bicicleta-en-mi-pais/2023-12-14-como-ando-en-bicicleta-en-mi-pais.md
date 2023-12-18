@@ -138,6 +138,31 @@ La verdad, no tengo consejos para trabajar esta habilidad más que llevar horas 
 
 Igual, yo solo circularía en horas pico por necesidad (6-8am y 4-6pm), nunca por disfrute. Aun teniendo en cuenta todas estas medidas, es demasiado estresante y riesgoso.
 
+# Equipo
+
+Aquí también hay un pequeño checklist de todo lo que se debería cargar en la bicicleta. Casi todo debería ser obligatorio.
+
+1. Bicicleta (obvio)
+1. Casco
+1. Zapatos de clip (opcional)
+1. Anteojos o lentes
+1. Guantes
+1. Luz trasera, roja.
+1. Neumático de repuesto
+1. Paletas para desmontar la llanta
+1. Multitool: También sería útil saber usarla
+1. Hidratación
+1. Protector solar: Mínimo de 10am-3pm. Yo personalmente uso de 8am a 4pm.
+1. Luz delantera, blanca
+
+Si son muchas cosas, y puede salir caro adquirirlas al inicio, pero es más costoso cualquier accidente complicado por la falta de alguna de ellas. No ando las herramientas? El Uber podría costarme el precio de las herramientas. No ando guantes? Unos económicos pueden estar en c5.000 (~$10) y me evitan raspones sumamente incómodos hasta por 2 semanas. Y la ausencia de casco o luces **podrían costarme la vida**; también más costoso que los implementos.
+
+## Compañía
+
+1. Compañero(s) de entrenamiento: Nos hace más visibles
+2. Compartir la ubicación GPS con alguien en casa: compañero virtual?
+3. Definir y compartir una hora estimada de regreso
+
 # Tips
 
 ### Acelerar como patineta
