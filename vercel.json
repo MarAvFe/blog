@@ -1,0 +1,5 @@
+{
+  "buildCommand": "make release",
+  "outputDirectory": "_site",
+  "framework": null
+}
