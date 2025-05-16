@@ -2,12 +2,6 @@
 
 > I'm a software developer from Costa Rica, interested in consumer IT security approach. I educate the average John Doe in how to be safer on the internet. But this blog is where I document my own research and experiments.
 
-## TODOs
-
-- [ ] Explore theme update from stock
-- [ ] Add newsletter field in footer
-- [ ] Add counters on tags page 
-
 ## Installation
 
 Run local server:
