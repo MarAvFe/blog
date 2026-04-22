@@ -45,3 +45,5 @@ José Mujica lo dijo mejor que nadie: cuando comprás algo, no estás pagando co
 ---
 
 *El boicot perfecto no existe. El boicot consciente sí. Y empieza con una pregunta antes de cada compra: ¿hay otra opción?*
+
+Más info en [BDS Movement](https://bdsmovement.net/es).
