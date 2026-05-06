@@ -1,63 +1,58 @@
-# Astro Starter Kit: Blog
+# Marcello Avila — Blog
+
+Personal blog built with [Astro](https://astro.build/). Deployed on Vercel.
+
+**Live:** https://blog.marcelloavila.com/
+
+## Stack
+
+- Astro 5 + TypeScript
+- Content Collections for type-safe post management
+- Local fonts (Atkinson Hyperlegible)
+- Google Analytics GA4 (production only)
+- Vercel deployment with security headers
+
+## Setup
 
 ```sh
-npm create astro@latest -- --template blog
+npm install
+npm run dev       # localhost:4321
+npm run build     # outputs to dist/
+npm run preview   # preview the build locally
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Deployment
 
-Features:
+Deployed on Vercel. Pushes to `main` auto-deploy. Build config is in `vercel.json` — security headers (CSP, X-Frame-Options, etc.) are configured there.
 
-- ✅ Minimal styling (make it your own!)
-- ✅ 100/100 Lighthouse performance
-- ✅ SEO-friendly with canonical URLs and Open Graph data
-- ✅ Sitemap support
-- ✅ RSS Feed support
-- ✅ Markdown & MDX support
+No environment variables required for basic operation.
 
-## 🚀 Project Structure
+## Recipes
 
-Inside of your Astro project, you'll see the following folders and files:
+- [How to add a post](docs/how-to-add-a-post.md)
+- [How to change the theme](docs/how-to-change-the-theme.md)
 
-```text
-├── public/
-├── src/
-│   ├── assets/
-│   ├── components/
-│   ├── content/
-│   ├── layouts/
-│   └── pages/
-├── astro.config.mjs
-├── README.md
-├── package.json
-└── tsconfig.json
+## Pending customization
+
+- [ ] Accent color — `--accent: #2337ff` in `src/styles/global.css`
+- [ ] Default OG image — fallback in `src/components/BaseHead.astro`
+- [ ] Paywall spec — see [`docs/spec-paywall.md`](docs/spec-paywall.md)
+
+## Project structure
+
 ```
-
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
-
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
-
-The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
-
-Any static assets, like images, can be placed in the `public/` directory.
-
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+src/
+  components/   # Header, Footer, ThemeToggle, etc.
+  content/blog/ # Markdown/MDX posts
+  layouts/      # BlogPost layout
+  pages/        # index, about, blog listing
+  styles/       # global.css
+public/
+  posts/        # Post images (referenced as /posts/filename.jpg)
+docs/           # How-to guides and specs
+vercel.json     # Build config + security headers
+```
 
 ## Credit
 
-This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
+Scaffolded from the [Astro blog template](https://astro.build/). Theme based on [Bear Blog](https://github.com/HermanMartinus/bearblog/).

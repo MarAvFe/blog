@@ -1,0 +1,98 @@
+---
+---
+<div class="depth-reader">
+	<div class="depth-nav" aria-label="Content depth navigation">
+		<div class="depth-info">
+			<span>Depth level</span>
+			<strong class="depth-current">1</strong>
+			<span>of</span>
+			<strong class="depth-total">?</strong>
+		</div>
+		<div class="depth-controls">
+			<button class="depth-btn depth-prev" disabled>← Simpler</button>
+			<button class="depth-btn depth-next">Deeper →</button>
+		</div>
+	</div>
+	<div class="depth-content">
+		<slot />
+	</div>
+</div>
+
+<style>
+	.depth-reader {
+		margin-top: 1em;
+	}
+	.depth-nav {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		flex-wrap: wrap;
+		gap: 0.75em;
+		padding: 0.75em 1em;
+		background: rgb(var(--gray-light));
+		border-radius: 8px;
+		margin-bottom: 2em;
+	}
+	.depth-info {
+		display: flex;
+		align-items: center;
+		gap: 0.4em;
+		font-size: 0.9em;
+		color: rgb(var(--gray));
+	}
+	.depth-info strong {
+		color: rgb(var(--gray-dark));
+		font-size: 1.1em;
+	}
+	.depth-controls {
+		display: flex;
+		gap: 0.5em;
+	}
+	.depth-btn {
+		background: var(--header-bg);
+		border: 1px solid rgb(var(--gray-light));
+		border-radius: 6px;
+		padding: 0.35em 0.9em;
+		cursor: pointer;
+		font-size: 0.875em;
+		color: rgb(var(--gray-dark));
+		transition: background 0.15s, color 0.15s;
+	}
+	.depth-btn:hover:not(:disabled) {
+		background: var(--accent);
+		color: #fff;
+		border-color: var(--accent);
+	}
+	.depth-btn:disabled {
+		opacity: 0.35;
+		cursor: not-allowed;
+	}
+</style>
+
+<script>
+	document.querySelectorAll('.depth-reader').forEach((reader) => {
+		const levels = Array.from(reader.querySelectorAll('[data-depth]')) as HTMLElement[];
+		const total = levels.length;
+		const totalEl = reader.querySelector('.depth-total');
+		const currentEl = reader.querySelector('.depth-current');
+		const prevBtn = reader.querySelector('.depth-prev') as HTMLButtonElement | null;
+		const nextBtn = reader.querySelector('.depth-next') as HTMLButtonElement | null;
+
+		let current = 1;
+		if (totalEl) totalEl.textContent = String(total);
+
+		function show(n: number) {
+			levels.forEach((l) => (l.style.display = 'none'));
+			const target = levels.find((l) => l.getAttribute('data-depth') === String(n));
+			if (target) target.style.display = 'block';
+			current = n;
+			if (currentEl) currentEl.textContent = String(n);
+			if (prevBtn) prevBtn.disabled = n <= 1;
+			if (nextBtn) nextBtn.disabled = n >= total;
+		}
+
+		show(1);
+		prevBtn?.addEventListener('click', () => show(current - 1));
+		nextBtn?.addEventListener('click', () => show(current + 1));
+	});
+</script>
