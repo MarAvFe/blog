@@ -7,7 +7,7 @@ import Header from '../components/Header.astro';
 
 type Props = CollectionEntry<'blog'>['data'];
 
-const { title, description = '', pubDate, updatedDate, heroImage } = Astro.props;
+const { title, description = '', pubDate, updatedDate, heroImage, tags = [] } = Astro.props;
 ---
 
 <html lang="en">
@@ -89,6 +89,15 @@ const { title, description = '', pubDate, updatedDate, heroImage } = Astro.props
 							}
 						</div>
 						<h1>{title}</h1>
+						{tags.length > 0 && (
+							<div class="tags">
+								{tags.map((tag) => (
+									<a href={`/blog?tag=${tag}`} class="tag">
+										{tag}
+									</a>
+								))}
+							</div>
+						)}
 						<hr />
 					</div>
 					<slot />
