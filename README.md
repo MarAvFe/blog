@@ -32,15 +32,31 @@ No environment variables required for basic operation.
 - [How to add a post](docs/how-to-add-a-post.md)
 - [How to change the theme](docs/how-to-change-the-theme.md)
 
-## Pending customization
+## Customization
 
 - [ ] Accent color — `--accent: #2337ff` in `src/styles/global.css`
 - [ ] Default OG image — fallback in `src/components/BaseHead.astro`
 - [ ] Paywall spec — see [`docs/spec-paywall.md`](docs/spec-paywall.md)
 
+## Post Ideas
+
+- [ ] Add bash aliases post
+- [ ] Setup and blog about GPG
+- [ ] Blog: HTTPS certs behavior
+- [ ] Blog: Ethical hacking: weaker chain link
+- [ ] Blog: Password rule of 3, 2, 1
+- [ ] Add post on image deletion idea ("quit" project, mobile app)
+- [ ] Edit home page with personal ideas and values
+
+## References to Research
+
+- [sneak.berlin](https://sneak.berlin)
+- [vext.info](https://vext.info)
+- [Image sizes guide](https://imagesuggest.com/blog/blog-post-image-size/)
+
 ## Project structure
 
-```
+```text
 src/
   components/   # Header, Footer, ThemeToggle, etc.
   content/blog/ # Markdown/MDX posts
