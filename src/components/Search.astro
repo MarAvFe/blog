@@ -1,0 +1,18 @@
+---
+---
+
+<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+<div id="search-container"></div>
+
+<script is:inline src="/pagefind/pagefind-ui.js"></script>
+<script is:inline>
+	window.addEventListener('DOMContentLoaded', () => {
+		new PagefindUI({ element: '#search-container', baseUrl: '/' });
+	});
+</script>
+
+<style>
+	#search-container {
+		margin-bottom: 2em;
+	}
+</style>
