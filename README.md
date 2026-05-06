@@ -1,40 +1,63 @@
-# Blog - Marcello Avila
+# Astro Starter Kit: Blog
 
-> I'm a software developer from Costa Rica, interested in consumer IT security approach. I educate the average John Doe in how to be safer on the internet. But this blog is where I document my own research and experiments.
-
-## Installation
-
-Run local server:
-
-```bash
-$ git clone git@github.com:maravfe/blog.git
-$ cd blog
-$ bundle install
-$ bundle add webrick
-$ bundle exec jekyll serve
+```sh
+npm create astro@latest -- --template blog
 ```
 
-Navigate to `localhost:4000`. You're Welcome, Fork and be Stargazer.
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
 
-[![Deployed with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/maravfe/blog)
+Features:
 
-## Guidelines
+- ✅ Minimal styling (make it your own!)
+- ✅ 100/100 Lighthouse performance
+- ✅ SEO-friendly with canonical URLs and Open Graph data
+- ✅ Sitemap support
+- ✅ RSS Feed support
+- ✅ Markdown & MDX support
 
-- [Image sizes](https://imagesuggest.com/blog/blog-post-image-size/)
+## 🚀 Project Structure
 
-## TODOs
+Inside of your Astro project, you'll see the following folders and files:
 
-- [ ] Add bash aliases post
-- [ ] Check [sneak.berlin](https://sneak.berlin)
-- [ ] Check [vext.info](https://vext.info)
-- [ ] Add post of images deletion idea. "quit" project. Mobile app
-- [ ] Edit home page with ideas and values
-- [ ] Setup and blog about GPG
-- [ ] Blog: https certs behavior
-- [ ] Blog: passwords hash and salt
-- [ ] Blog: Ethical hacking: weaker chain link
-- [ ] Blog: Password rule of 3, 2, 1
+```text
+├── public/
+├── src/
+│   ├── assets/
+│   ├── components/
+│   ├── content/
+│   ├── layouts/
+│   └── pages/
+├── astro.config.mjs
+├── README.md
+├── package.json
+└── tsconfig.json
+```
 
-## License
+Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
 
-This project is open source and available under the [MIT License](LICENSE).
+There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+
+The `src/content/` directory contains "collections" of related Markdown and MDX documents. Use `getCollection()` to retrieve posts from `src/content/blog/`, and type-check your frontmatter using an optional schema. See [Astro's Content Collections docs](https://docs.astro.build/en/guides/content-collections/) to learn more.
+
+Any static assets, like images, can be placed in the `public/` directory.
+
+## 🧞 Commands
+
+All commands are run from the root of the project, from a terminal:
+
+| Command                   | Action                                           |
+| :------------------------ | :----------------------------------------------- |
+| `npm install`             | Installs dependencies                            |
+| `npm run dev`             | Starts local dev server at `localhost:4321`      |
+| `npm run build`           | Build your production site to `./dist/`          |
+| `npm run preview`         | Preview your build locally, before deploying     |
+| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro -- --help` | Get help using the Astro CLI                     |
+
+## 👀 Want to learn more?
+
+Check out [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+
+## Credit
+
+This theme is based off of the lovely [Bear Blog](https://github.com/HermanMartinus/bearblog/).
