@@ -1,8 +1,9 @@
 ---
-layout: post
 title: "IA and Me - Exploring the Benefits of AI for Personal Security"
-date: 2023-02-08 22:16:20 -0600
-tags: ia ideas business
+pubDate: 2023-02-08
+tags: ['ia', 'ideas', 'business']
+description: "How ChatGPT and AI tools can help with personal security, decision-making, and business."
+heroImage: /posts/chatgpt-sneakers.png
 ---
 
 It's 2023, more than a month after my last post, it was tough to resume in January. Priorities I guess.
@@ -22,9 +23,9 @@ Some amazing features are that it has a memory, meaning you are not limited to a
 - Me: From 1st way, which symbols are more commonly found in any western keyboard?
 - ChatGPT: Special characters: `! @ # $ % & * ( ) _ - + = { } [ ] \ | ; : ' " , . / ?`
 
-## Example: 
+## Example Screenshots
 
-<img src="{{page.url}}chatgpt-eli5law.png" alt="ChatGPT Prompt for best pronator sneakers">
+<img src="/posts/chatgpt-eli5law.png" alt="ChatGPT Prompt for explaining law simply">
 
 # Perspective
 
@@ -39,7 +40,7 @@ Search engines allow you to find live and indexed websites on the internet, usua
 
 And then match the description of these results and guess which will fit better to your feet. You'll find a sea of sneakers features for different brands where their naming is not standard and it becomes very difficult to understand and you end up asking a person, buying whichever looks better or choosing one that will not help. Usually pronator/supine articles are related to athletes or advanced runners. You may be able to find an article with this description but not a lot. With AI instead you can copy the full prompt and it will automatically gather data from several sources tailoring the data to your needs. 
 
-<img src="{{page.url}}chatgpt-sneakers.png" alt="ChatGPT Prompt for best pronator sneakers">
+<img src="/posts/chatgpt-sneakers.png" alt="ChatGPT Prompt for best pronator sneakers">
 
 This gives you a rolling start into selecting the best sneakers focusing only into your case, avoiding the ad-full websites interested in selling as much as they want to you. You can do the test right now. Go and figure with your search engine the best sneakers for a pronator foot person for daily usage, it may take you a few minutes and that's expected. But it can also take you 1 minute with AI, [login here][cgptchat].
 
@@ -76,8 +77,6 @@ I expected a reply with how to use ChatGPT or a different AI model to practice t
 I will then continue this path learning to interact with the AI and provide you with practical uses of this or other AI models to protect yourself and those around you online.
 
 Cheers.
-
-
 
 [cgpt]: https://en.wikipedia.org/wiki/ChatGPT
 [cgptchat]: https://chat.openai.com/

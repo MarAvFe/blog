@@ -1,9 +1,9 @@
 ---
-layout: post
 title: "How a website stores your password"
-date: 2022-11-07 08:00:20 -0600
-modified: 2022-11-08 08:50:20 -0600
-tags: security password learning
+pubDate: 2022-11-07
+updatedDate: 2022-11-08
+tags: ['security', 'password', 'learning']
+description: "Understanding password storage methods: hashing, salting, and why plain text is a security nightmare."
 ---
 
 As far as a computer cares, us people could be monkeys or slugs on the other side of the keyboard. Based on "a complex intelectual test" of physically using a computer by typing into a keyboard the website name and our username, they can tell us apart from animals. We then added an extra security layer of having a secret word for computers to identify us apart from other humans.
@@ -17,7 +17,7 @@ No more than that.
 We'll discuss how are passwords safe in a different post. Today we'll talk about how to store it (or not doing it).
 
 For the sake of this post, we'll use example credentials: Username `Gustavo` and password `saf3`.
- 
+
 # When is a password required?
 
 Usernames allow services to tell you apart from another person, often your own name. Passwords allow services to tell you apart from another person trying to impersonate you. If you come here and say you're Gustavo and your password is `saf3`, I'd have to trust you as a website.

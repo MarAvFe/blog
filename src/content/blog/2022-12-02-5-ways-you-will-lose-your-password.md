@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "5 ways you will lose your password"
-date:   2022-12-02 17:30:20 -0600
-tags: password security tools
+title: "5 ways you will lose your password"
+pubDate: 2022-12-02
+tags: ['password', 'security', 'tools']
+description: "Common ways passwords are compromised: weak passwords, reuse, sharing, predictability, and refusing to change."
+heroImage: /posts/passcracktime.png
 ---
 
 It's a string of characters. How can you ever lose it? You can write it down a notebook or a piece of paper and shove it within page 47 of the yellow book on your shelf. Ok, you cannot lose your password. But you can **lose it's secrecy trait**, and that's about the same.
@@ -16,7 +17,7 @@ So here's a few ways you'll lose your password.
 According to [Hive Systems][passtable], your password may take shorter amount of time to crack than you may think:
 
 <figure>
-<img src="{{page.url}}passcracktime.png" alt="table with password cracking times">
+<img src="/posts/passcracktime.png" alt="table with password cracking times">
 <figcaption>Where is your password within the table?</figcaption>
 </figure>
 
@@ -59,5 +60,4 @@ A regular change of password defeats several of the common vulnerabilities users
 [passtable]: https://www.hivesystems.io/password-table
 [haveibeenpwned]: https://haveibeenpwned.com/
 [passshare]: https://storage.googleapis.com/gweb-uniblog-publish-prod/documents/PasswordCheckup-HarrisPoll-InfographicFINAL.pdf
-
 [passwordchange]: https://www.statista.com/statistics/1090140/changing-of-password-in-the-last-year-in-the-eu-by-online-service/

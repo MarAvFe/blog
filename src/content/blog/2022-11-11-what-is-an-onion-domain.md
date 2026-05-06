@@ -1,8 +1,9 @@
 ---
-layout: post
-title:  "What is an onion domain?"
-date:   2022-11-11 22:32:20 -0600
-tags: security privacy
+title: "What is an onion domain?"
+pubDate: 2022-11-11
+tags: ['security', 'privacy']
+description: "Understanding .onion domains, Tor network, and how onion routing provides anonymity."
+heroImage: /posts/onionlayers.png
 ---
 
 So recently a friend told me [one of his favorite websites went down][zlib-news]. At some point he mentioned he was able to still access the service via TOR browser, using an **onion domain**.
@@ -20,7 +21,7 @@ The Onion Router is a software created by the [Tor Project][torproject], which p
 The network is a **group of computers**. A Tor client can choose a random path for each request, even if it's for the same website. This way, any eavesdropper that snoops on a server, will not get full information but an often incomplete set of data.
 
 <figure>
-<img src="{{page.url}}path.png" alt="Tor browser diagram">
+<img src="/posts/path.png" alt="Tor browser diagram">
 <figcaption>TOR Network example path. <a href="https://www.expressvpn.com/blog/tor/">Source</a></figcaption>
 </figure>
 
@@ -41,7 +42,6 @@ mywebsite.com ==> 192.168.0.1
 Address                                 Coordinates
 Country, State, Neighborhood, House ~=> 9.9124181,-84.5320702
 ```
-
 
 Whenever you input a website in your browser like `https://cowsay.morecode.org/`, your computer does not know where that is. **But it asks** somebody else. Your router, your Internet Service Provider (ISP), a Name Server (NS). One of them will tell them that `https://cowsay.morecode.org/` is located in `192.168.0.1` or some IP. Then behind the scenes, your browser will go to that IP and retrieve a webpage. [howdns.works](https://howdns.works) has the best explanation of this process.
 
@@ -67,7 +67,7 @@ To access an onion service, the browser must be able to perform some extra steps
 Very straightforward. However, real location of mywebsite.com is shared with user's browser and unanonimous.
 
 <figure>
-<img src="{{page.url}}onionlayers.png" alt="onion message encryption layers">
+<img src="/posts/onionlayers.png" alt="onion message encryption layers">
 <figcaption>Onion Routing encryption layers <a href="https://www.maketecheasier.com/mte-explains-onion-routing/">Source</a></figcaption>
 </figure>
 
@@ -98,7 +98,7 @@ My friend here simply wanted to read and learn more.
 [brave]: https://brave.com/
 [base32]: https://en.wikipedia.org/wiki/Base32
 [torspec]: https://eighthave.gitlab.io/torspec/tor-spec.html
-[rendspec]:  https://eighthave.gitlab.io/torspec/rend-spec-v3.html
+[rendspec]: https://eighthave.gitlab.io/torspec/rend-spec-v3.html
 [iceweasel]: https://github.com/adonais/iceweasel
 [hsdiripv4]: https://stem.torproject.org/api/descriptor/hidden_service.html
 [handshake]: https://developer.mozilla.org/en-US/docs/Glossary/TCP_handshake
