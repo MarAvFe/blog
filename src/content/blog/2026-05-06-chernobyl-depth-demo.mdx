@@ -1,0 +1,131 @@
+---
+title: "The Chernobyl Accident — A Multi-Depth Analysis"
+pubDate: 2026-05-06
+tags: ['demo', 'history', 'nuclear']
+description: "From 5 essential bullets to nuclear physics — explore the 1986 Chernobyl accident at the depth that works for you."
+---
+
+import DepthReader from '../../components/DepthReader.astro';
+
+*This is a demo of depth-level reading. Use the navigation above each section to go deeper or simpler.*
+
+<DepthReader>
+
+<div data-depth="1">
+
+## Level 1 — The Essentials
+
+- On **April 26, 1986**, Reactor No. 4 at the Chernobyl Nuclear Power Plant in Soviet Ukraine exploded.
+- A botched safety test caused an uncontrolled nuclear chain reaction and two rapid explosions.
+- The blasts released massive amounts of radioactive material into the atmosphere.
+- Two workers died immediately; 28–31 more died from acute radiation syndrome within weeks.
+- Over 350,000 people were permanently evacuated. The 30km exclusion zone remains in place today.
+
+</div>
+
+<div data-depth="2">
+
+## Level 2 — What Happened
+
+The explosion occurred at **1:23 AM** during a planned safety test on Reactor No. 4. The reactor had been running at low power after a difficult restart, placing it in an unstable state.
+
+The test was designed to verify that the turbines' residual inertia could power emergency cooling pumps during the 60–90 second gap between a power loss and diesel generator startup. It had been postponed multiple times, and the tired night-shift crew finally ran it hours behind schedule.
+
+When operators initiated the shutdown to start the test, the reactor surged uncontrollably. A steam explosion blew off the 1,000-ton reactor cover plate, exposing the core to open air. A second explosion — the nature of which is still debated — followed seconds later.
+
+The resulting graphite fire burned for **10 days**, spreading radioactive contamination across much of Europe. Sweden detected abnormal radiation on the morning of April 28, alerting the world before the Soviets officially acknowledged the accident.
+
+</div>
+
+<div data-depth="3">
+
+## Level 3 — The Context
+
+The Chernobyl plant used **RBMK-1250 reactors** — a Soviet design that used graphite as a moderator and water as a coolant, unlike most Western designs which use water for both roles.
+
+**The night before the accident:**
+The reactor had been running at full power but was ordered to reduce output for the delayed test. During the reduction, xenon-135 — a fission byproduct that absorbs neutrons — accumulated in the core ("xenon poisoning"), suppressing the chain reaction and making the reactor nearly uncontrollable at low power.
+
+To maintain even minimal power, operators withdrew far more control rods than safety regulations allowed. The reactor became inherently unstable.
+
+**The test itself:**
+When the test was initiated, operators reduced steam flow to the turbines, which caused coolant to heat up. More steam meant fewer neutrons absorbed by water, which increased reactor power — a runaway feedback loop. Emergency shutdown was triggered (the "AZ-5" button), but the reactor's design meant the shutdown rods initially *increased* reactivity before they could decrease it.
+
+The reactor spiked to many times its rated output within seconds.
+
+</div>
+
+<div data-depth="4">
+
+## Level 4 — Root Causes
+
+Two design flaws made the RBMK uniquely dangerous under the conditions of that night:
+
+### Positive Void Coefficient
+
+When coolant water converts to steam ("voids"), most modern Western reactors become *less* reactive — a built-in negative feedback that acts as a safety brake. The RBMK had a **positive void coefficient**: more steam → more reactivity → more heat → more steam. Once power started rising, the reactor accelerated itself. At low power with few control rods inserted, this effect was dramatically amplified.
+
+### The Graphite Tip Effect
+
+RBMK control rods had graphite sections at their tips — the same material used to *sustain* the nuclear reaction. When rods were inserted to reduce power, the graphite tips entered the core first, briefly *increasing* reactivity before the boron carbide (neutron-absorbing) sections followed.
+
+**The fatal sequence:**
+When AZ-5 was pressed at 01:23:40, the 211 control rods began downward. Their graphite tips entered the most reactive zone of the core first. Reactivity spiked by an estimated 2–3 β (beta units) within the first second — well past prompt criticality.
+
+Combined with the positive void coefficient and a critically low number of inserted rods (~6–8 vs. the required 15), the reactor reached approximately **30,000 MW thermal** (10× rated power) in under 3 seconds. The first steam explosion followed 7 seconds after AZ-5 was pressed.
+
+The INSAG-7 report (1991) assigned responsibility to *both* operator error and fundamental design flaws — a finding the Soviets had resisted in the initial 1986 report, which blamed operators exclusively.
+
+</div>
+
+<div data-depth="5">
+
+## Level 5 — Nuclear Physics & Forensic Analysis
+
+### Reactor State Before the Test
+
+The reactor was operating at approximately **200 MW thermal (MWt)** — far below its 3,200 MWt design output. This was a consequence of xenon poisoning:
+
+- **Xenon-135** is produced from the decay of iodine-135, a fission product. At high power, xenon is continuously "burned off" by neutron absorption. When power drops suddenly, production continues but burnoff stops, causing xenon to accumulate.
+- Xenon concentration peaked at approximately **3× normal equilibrium** after the power reduction, creating a strong negative reactivity worth approximately −28 β.
+- To compensate, operators withdrew all but 6–8 control rods. The operational limit required a minimum of 15 rods inserted. This left nearly the entire graphite moderator volume active.
+
+### Neutron Physics of the Excursion
+
+The RBMK's effective delayed neutron fraction (βeff) was approximately **0.0065**. The threshold for prompt criticality is reactivity ρ ≥ βeff (i.e., ρ ≥ 1 $, where 1 dollar = βeff).
+
+The positive void coefficient was approximately **+4 to +5 pcm per % void** in the operating conditions that night — compared to −10 to −30 pcm/% void for typical pressurized water reactors. As steam generation accelerated, each percent increase in voiding added 4–5 pcm of positive reactivity, creating a self-reinforcing excursion.
+
+### The AZ-5 Trigger and Graphite Tip Effect
+
+When AZ-5 was actuated at 01:23:40.667 (recorded on the DREG data logger), control rods began downward at ~0.4 m/s — inserting from the top while the graphite tips were already at mid-core depth.
+
+The bottom third of the core, already the most reactive zone due to asymmetric xenon distribution, received the graphite tips first. Reactivity increased by an estimated **+2 to +3 β** within the first second, triggering prompt criticality. Power levels reached an estimated 30,000 MWt within ~3 seconds.
+
+### The Two Explosions
+
+**First explosion (01:23:47):** Steam explosion. The rapid power surge caused instantaneous vaporization of coolant. The pressure spike fractured the fuel channels, and the steam explosion lifted the 1,000-ton "Elena" biological shield plate off the reactor, severing all cooling connections.
+
+**Second explosion (~01:23:49):** The nature remains debated. Three main hypotheses:
+
+1. A second, more powerful steam explosion from fuel-coolant interaction
+2. A prompt criticality excursion — a brief nuclear explosion in the tens-of-megajoule range
+3. A hydrogen explosion from steam-zirconium reactions
+
+Forensic analysis of fallout distribution and the trajectory of reactor components (some fragments found up to 400m away, indicating near-vertical ejection) supports a nuclear component to the second explosion, though definitive confirmation remains elusive.
+
+### Post-Accident RBMK Modifications
+
+All remaining RBMK reactors were modified by 1987:
+
+- Control rods redesigned: graphite tips replaced with neutron-absorbing material, reducing tip-effect reactivity insertion to near zero
+- Boron concentration in rods increased
+- Minimum operational control rod limit raised from 15 to 30 rods
+- Fuel enrichment increased from 2% to 2.8% U-235, lowering the void coefficient
+- Prompt shutdown signal from power-to-flow ratio added
+
+The remaining RBMK reactors at Leningrad, Smolensk, and Kursk operated until between 2004 and 2021.
+
+</div>
+
+</DepthReader>

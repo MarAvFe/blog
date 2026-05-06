@@ -1,0 +1,29 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>Welcome</h1>
+			<p>
+				Hi, I'm Marcello Avila. This is my blog—a space where I write about technology, digital security, activism, and what I'm learning along the way.
+			</p>
+			<p>
+				You'll find posts on everything from how websites track you to why consumer choices matter. I write to help people understand technology better and to reflect on the ethical dimensions of the tools we use.
+			</p>
+			<p>
+				<a href="/blog">Check out the full archive</a> or <a href="/about">learn more about me</a>.
+			</p>
+		</main>
+		<Footer />
+	</body>
+</html>
