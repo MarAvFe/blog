@@ -1,5 +1,7 @@
 ---
 import { type CollectionEntry, getCollection, render } from 'astro:content';
+import { toString } from 'mdast-util-to-string';
+import readingTime from 'reading-time';
 import BlogPost from '../../layouts/BlogPost.astro';
 
 export async function getStaticPaths() {
@@ -13,8 +15,18 @@ type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
 const { Content } = await render(post);
+
+// Calculate reading time from the rendered HTML
+const textContent = post.body
+	.replace(/---[\s\S]*?---/, '') // Remove frontmatter
+	.replace(/```[\s\S]*?```/g, '') // Remove code blocks
+	.replace(/<[^>]+>/g, ''); // Remove HTML tags if any
+
+const rt = readingTime(textContent);
+const words = textContent.split(/\s+/).filter(w => w.length > 0).length;
+const minutesRead = Math.ceil(rt.minutes);
 ---
 
-<BlogPost {...post.data}>
+<BlogPost {...post.data} minutesRead={minutesRead} words={words}>
 	<Content />
 </BlogPost>

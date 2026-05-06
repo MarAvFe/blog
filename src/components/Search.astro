@@ -1,0 +1,20 @@
+---
+// Empty frontmatter - this is a client-only component
+---
+
+<div id="search-container">
+	<link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+	<script type="module" src="/pagefind/pagefind-ui.js" is:inline></script>
+	<script is:inline>
+		new PagefindUI({
+			element: '#search-container',
+			baseUrl: '/',
+		});
+	</script>
+</div>
+
+<style>
+	#search-container {
+		margin-bottom: 2em;
+	}
+</style>
