@@ -61,6 +61,46 @@
     color: #fff;
   }
 
+  #stairs-mute-toggle {
+    position: absolute;
+    top: 3%;
+    right: 4%;
+    width: 34px;
+    height: 34px;
+    background: rgba(17, 17, 17, 0.85);
+    border: 2px solid #fff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    padding: 0;
+  }
+
+  #stairs-mute-toggle svg {
+    width: 60%;
+    height: 60%;
+    stroke: #fff;
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  #stairs-mute-toggle .stairs-mute-off-icon {
+    display: none;
+  }
+
+  #stairs-mute-toggle.stairs-muted .stairs-mute-on-icon {
+    display: none;
+  }
+
+  #stairs-mute-toggle.stairs-muted .stairs-mute-off-icon {
+    display: block;
+  }
+
   #stairs-touch-controls {
     position: absolute;
     left: 5%;
@@ -151,6 +191,19 @@
   <div id="stairs-canvas-area">
     <canvas id="stairs-canvas" width="480" height="640"></canvas>
 
+    <button id="stairs-mute-toggle" type="button" aria-label="Toggle music">
+      <svg class="stairs-mute-on-icon" viewBox="0 0 24 24">
+        <path d="M4 9v6h4l5 5V4L8 9H4z" />
+        <path d="M16 8.5a5 5 0 0 1 0 7" />
+        <path d="M18.5 6a9 9 0 0 1 0 12" />
+      </svg>
+      <svg class="stairs-mute-off-icon" viewBox="0 0 24 24">
+        <path d="M4 9v6h4l5 5V4L8 9H4z" />
+        <path d="M16 9l5 6" />
+        <path d="M21 9l-5 6" />
+      </svg>
+    </button>
+
     <div id="stairs-touch-controls">
       <button id="stairs-touch-turn" class="stairs-touch-btn" type="button" aria-label="Turn and climb">
         <svg viewBox="0 0 24 24">
@@ -187,6 +240,7 @@
   var touchTurnBtn = document.getElementById("stairs-touch-turn");
   var touchClimbBtn = document.getElementById("stairs-touch-climb");
   var gameoverRestartBtn = document.getElementById("stairs-gameover-restart");
+  var muteToggleBtn = document.getElementById("stairs-mute-toggle");
 
   var CHUNK_SIZE = 1000;
   var GEN_THRESHOLD = 0.7;
@@ -314,6 +368,169 @@
     }
   }
 
+  var MUTED_KEY = "stairs_muted";
+  var SCHEDULE_AHEAD_S = 0.2;
+  var SCHEDULE_INTERVAL_MS = 50;
+
+  var CLIMB_TRACK = {
+    noteS: 0.18,
+    bass: [110.00, 0, 130.81, 0, 98.00, 0, 130.81, 0],
+    lead: [440.00, 523.25, 440.00, 349.23, 0, 392.00, 440.00, 0],
+    bassType: "square",
+    leadType: "triangle",
+    bassVolume: 0.05,
+    leadVolume: 0.06
+  };
+
+  var LOBBY_TRACK = {
+    noteS: 0.55,
+    bass: [82.41, 0, 0, 0, 73.42, 0, 0, 0],
+    lead: [0, 0, 329.63, 0, 0, 0, 293.66, 0],
+    bassType: "triangle",
+    leadType: "sine",
+    bassVolume: 0.045,
+    leadVolume: 0.04
+  };
+
+  var audioCtx = null;
+  var musicGain = null;
+  var musicMuted = true;
+  var musicTimerId = null;
+  var nextNoteTime = 0;
+  var noteIndex = 0;
+  var currentTrack = null;
+
+  function loadMuted() {
+    try {
+      var stored = localStorage.getItem(MUTED_KEY);
+      return stored === null ? true : stored === "1";
+    } catch (e) {
+      return true;
+    }
+  }
+
+  function saveMuted(v) {
+    try {
+      localStorage.setItem(MUTED_KEY, v ? "1" : "0");
+    } catch (e) {
+      /* ignore */
+    }
+  }
+
+  function playNote(freq, time, duration, type, volume) {
+    if (freq <= 0) return;
+    var osc = audioCtx.createOscillator();
+    var gain = audioCtx.createGain();
+    osc.type = type;
+    osc.frequency.setValueAtTime(freq, time);
+    gain.gain.setValueAtTime(0, time);
+    gain.gain.linearRampToValueAtTime(volume, time + 0.01);
+    gain.gain.exponentialRampToValueAtTime(0.001, time + duration);
+    osc.connect(gain);
+    gain.connect(musicGain);
+    osc.start(time);
+    osc.stop(time + duration + 0.02);
+  }
+
+  function scheduleNotes() {
+    var track = currentTrack;
+    while (nextNoteTime < audioCtx.currentTime + SCHEDULE_AHEAD_S) {
+      var i = noteIndex % track.bass.length;
+      playNote(track.bass[i], nextNoteTime, track.noteS * 0.9, track.bassType, track.bassVolume);
+      playNote(track.lead[i], nextNoteTime, track.noteS * 0.8, track.leadType, track.leadVolume);
+      nextNoteTime += track.noteS;
+      noteIndex++;
+    }
+  }
+
+  function ensureAudioContext() {
+    if (audioCtx) return true;
+    var AudioContextClass = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextClass) return false;
+    audioCtx = new AudioContextClass();
+    musicGain = audioCtx.createGain();
+    musicGain.gain.value = 1;
+    musicGain.connect(audioCtx.destination);
+    return true;
+  }
+
+  function playTrack(track) {
+    if (!ensureAudioContext()) return;
+    if (audioCtx.state === "suspended") audioCtx.resume();
+    if (musicTimerId !== null && currentTrack === track) return;
+    stopMusic();
+    currentTrack = track;
+    nextNoteTime = audioCtx.currentTime + 0.05;
+    noteIndex = 0;
+    scheduleNotes();
+    musicTimerId = setInterval(scheduleNotes, SCHEDULE_INTERVAL_MS);
+  }
+
+  function startMusic() {
+    playTrack(CLIMB_TRACK);
+  }
+
+  function startLobbyMusic() {
+    playTrack(LOBBY_TRACK);
+  }
+
+  function stopMusic() {
+    if (musicTimerId !== null) {
+      clearInterval(musicTimerId);
+      musicTimerId = null;
+    }
+    currentTrack = null;
+  }
+
+  function applyMuteState() {
+    muteToggleBtn.classList.toggle("stairs-muted", musicMuted);
+    if (musicMuted) {
+      stopMusic();
+    } else if (gameState === "playing") {
+      if (timerStarted) {
+        startMusic();
+      } else {
+        startLobbyMusic();
+      }
+    }
+  }
+
+  function toggleMute() {
+    musicMuted = !musicMuted;
+    saveMuted(musicMuted);
+    applyMuteState();
+  }
+
+  function playJumpSound() {
+    if (musicMuted || !audioCtx) return;
+    var t = audioCtx.currentTime;
+    playNote(660, t, 0.07, "square", 0.07);
+  }
+
+  function playCoinSound(big) {
+    if (musicMuted || !audioCtx) return;
+    var t = audioCtx.currentTime;
+    var mult = big ? 1.5 : 1;
+    playNote(988 * mult, t, 0.06, "triangle", 0.07);
+    playNote(1319 * mult, t + 0.05, 0.09, "triangle", 0.07);
+  }
+
+  function playFailSound() {
+    if (musicMuted || !audioCtx) return;
+    var t = audioCtx.currentTime;
+    var osc = audioCtx.createOscillator();
+    var gain = audioCtx.createGain();
+    osc.type = "sawtooth";
+    osc.frequency.setValueAtTime(220, t);
+    osc.frequency.exponentialRampToValueAtTime(70, t + 0.5);
+    gain.gain.setValueAtTime(0.08, t);
+    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.55);
+    osc.connect(gain);
+    gain.connect(musicGain);
+    osc.start(t);
+    osc.stop(t + 0.6);
+  }
+
   function generateCoin() {
     if (Math.random() >= COIN_CHANCE) return "none";
     return Math.random() < BIG_COIN_CHANCE ? "big" : "small";
@@ -359,6 +576,7 @@
 
   function resetGame() {
     updateBest();
+    stopMusic();
     gameOverRendered = false;
     stairArray = [];
     coinArray = [];
@@ -382,6 +600,7 @@
     playerFacing = stairArray[0];
     updateHud();
     updateControlsVisibility();
+    if (!musicMuted) startLobbyMusic();
   }
 
   function updateHud() {
@@ -399,8 +618,15 @@
     return playerPosition === 0 ? 0 : stepOffsetX(playerPosition - 1);
   }
 
+  function resumeAudioIfNeeded() {
+    if (!musicMuted && audioCtx && audioCtx.state === "suspended") {
+      audioCtx.resume();
+    }
+  }
+
   function attemptClimb() {
     if (gameState !== "playing") return;
+    resumeAudioIfNeeded();
     ensureStairs();
     var nextDir = stairArray[playerPosition];
     if (nextDir === playerFacing) {
@@ -408,15 +634,21 @@
       var landedCoin = coinArray[playerPosition];
       playerPosition++;
       score = playerPosition;
-      timerStarted = true;
+      if (!timerStarted) {
+        timerStarted = true;
+        if (!musicMuted) startMusic();
+      }
+      playJumpSound();
       updateBest();
       refillTimer(playerPosition);
       if (landedCoin === "small") {
         coins += 1;
         saveCoins(coins);
+        playCoinSound(false);
       } else if (landedCoin === "big") {
         coins += BIG_COIN_VALUE;
         saveCoins(coins);
+        playCoinSound(true);
       }
       ensureStairs();
       updateHud();
@@ -444,6 +676,8 @@
     fallProgress = 0;
     fallAngle = playerFacing === "left" ? -1 : 1;
     deathReason = reason;
+    stopMusic();
+    playFailSound();
     if (missedToOffsetX !== undefined) {
       var now = performance.now();
       stepAnimStart = now;
@@ -486,9 +720,9 @@
   }
 
   function drawCoin(kind, x, y) {
-    var r = kind === "big" ? 11 : 6;
+    var r = kind === "big" ? 35 : 20;
     var coinY = y - STEP_H / 2 - r - 3;
-    ctx.fillStyle = "#f2c200";
+    ctx.fillStyle = kind === "big" ? "#f2c200" : "#c0c0c0";
     ctx.strokeStyle = "#111";
     ctx.lineWidth = 1.5;
     ctx.beginPath();
@@ -895,9 +1129,12 @@
 
   bindTouchButton(touchTurnBtn, turnAndClimb);
   bindTouchButton(touchClimbBtn, attemptClimb);
+  bindTouchButton(muteToggleBtn, toggleMute);
 
   best = loadBest();
   coins = loadCoins();
+  musicMuted = loadMuted();
+  applyMuteState();
   resetGame();
   requestAnimationFrame(tick);
 })();
