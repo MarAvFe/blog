@@ -1,46 +1,74 @@
-# Blog - Marcello Avila
+# Marcello Avila — Blog
 
-> I'm a software developer from Costa Rica, interested in consumer IT security approach. I educate the average John Doe in how to be safer on the internet. But this blog is where I document my own research and experiments.
+Personal blog built with [Astro](https://astro.build/). Deployed on Vercel.
 
-## TODOs
+**Live:** https://blog.marcelloavila.com/
 
-- [ ] Explore theme update from stock
-- [ ] Add newsletter field in footer
-- [ ] Add counters on tags page 
+## Stack
 
-## Installation
+- Astro 5 + TypeScript
+- Content Collections for type-safe post management
+- Local fonts (Atkinson Hyperlegible)
+- Google Analytics GA4 (production only)
+- Vercel deployment with security headers
 
-Run local server:
+## Setup
 
-```bash
-$ git clone git@github.com:maravfe/blog.git
-$ cd blog
-$ bundle install
-$ bundle add webrick
-$ bundle exec jekyll serve
+```sh
+npm install
+npm run dev       # localhost:4321
+npm run build     # outputs to dist/
+npm run preview   # preview the build locally
 ```
 
-Navigate to `localhost:4000`. You're Welcome, Fork and be Stargazer.
+## Deployment
 
-[![Deployed with Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/maravfe/blog)
+Deployed on Vercel. Pushes to `main` auto-deploy. Build config is in `vercel.json` — security headers (CSP, X-Frame-Options, etc.) are configured there.
 
-## Guidelines
+No environment variables required for basic operation.
 
-- [Image sizes](https://imagesuggest.com/blog/blog-post-image-size/)
+## Recipes
 
-## TODOs
+- [How to add a post](docs/how-to-add-a-post.md)
+- [How to change the theme](docs/how-to-change-the-theme.md)
+
+## Customization
+
+- [ ] Accent color — `--accent: #2337ff` in `src/styles/global.css`
+- [ ] Default OG image — fallback in `src/components/BaseHead.astro`
+- [ ] Paywall spec — see [`docs/spec-paywall.md`](docs/spec-paywall.md)
+
+## Post Ideas
 
 - [ ] Add bash aliases post
-- [ ] Check [sneak.berlin](https://sneak.berlin)
-- [ ] Check [vext.info](https://vext.info)
-- [ ] Add post of images deletion idea. "quit" project. Mobile app
-- [ ] Edit home page with ideas and values
 - [ ] Setup and blog about GPG
-- [ ] Blog: https certs behavior
-- [ ] Blog: passwords hash and salt
+- [ ] Blog: HTTPS certs behavior
 - [ ] Blog: Ethical hacking: weaker chain link
 - [ ] Blog: Password rule of 3, 2, 1
+- [ ] Add post on image deletion idea ("quit" project, mobile app)
+- [ ] Edit home page with personal ideas and values
 
-## License
+## References to Research
 
-This project is open source and available under the [MIT License](LICENSE).
+- [sneak.berlin](https://sneak.berlin)
+- [vext.info](https://vext.info)
+- [Image sizes guide](https://imagesuggest.com/blog/blog-post-image-size/)
+
+## Project structure
+
+```text
+src/
+  components/   # Header, Footer, ThemeToggle, etc.
+  content/blog/ # Markdown/MDX posts
+  layouts/      # BlogPost layout
+  pages/        # index, about, blog listing
+  styles/       # global.css
+public/
+  posts/        # Post images (referenced as /posts/filename.jpg)
+docs/           # How-to guides and specs
+vercel.json     # Build config + security headers
+```
+
+## Credit
+
+Scaffolded from the [Astro blog template](https://astro.build/). Theme based on [Bear Blog](https://github.com/HermanMartinus/bearblog/).

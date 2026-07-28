@@ -1,0 +1,27 @@
+---
+import { type CollectionEntry, getCollection, render } from 'astro:content';
+import readingTime from 'reading-time';
+import BlogPost from '../../layouts/BlogPost.astro';
+
+export async function getStaticPaths() {
+	const posts = await getCollection('blog');
+	return posts.map((post) => ({
+		params: { slug: post.id },
+		props: post,
+	}));
+}
+type Props = CollectionEntry<'blog'>;
+
+const post = Astro.props;
+const { Content } = await render(post);
+
+const textContent = post.body
+	.replace(/```[\s\S]*?```/g, '')
+	.replace(/<[^>]+>/g, '');
+const words = textContent.split(/\s+/).filter((w) => w.length > 0).length;
+const minutesRead = Math.ceil(readingTime(textContent).minutes);
+---
+
+<BlogPost {...post.data} minutesRead={minutesRead} words={words}>
+	<Content />
+</BlogPost>
