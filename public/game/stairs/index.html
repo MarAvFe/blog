@@ -428,7 +428,9 @@
       stairSlideFromOffsetX = fromOffsetX;
       stairSlideToOffsetX = currentPlayerOffsetX();
     } else {
-      startFall("fall");
+      var missedFromOffsetX = currentPlayerOffsetX();
+      var missedToOffsetX = missedFromOffsetX + (playerFacing === "left" ? -STEP_RUN : STEP_RUN);
+      startFall("fall", missedFromOffsetX, missedToOffsetX);
     }
   }
 
@@ -438,11 +440,21 @@
     attemptClimb();
   }
 
-  function startFall(reason) {
+  function startFall(reason, missedFromOffsetX, missedToOffsetX) {
     gameState = "falling";
     fallProgress = 0;
     fallAngle = playerFacing === "left" ? -1 : 1;
     deathReason = reason;
+    if (missedToOffsetX !== undefined) {
+      var now = performance.now();
+      stepAnimStart = now;
+      stairSlideStart = now;
+      stairSlideFromOffsetX = missedFromOffsetX;
+      stairSlideToOffsetX = missedToOffsetX;
+    } else {
+      stepAnimStart = 0;
+      stairSlideStart = 0;
+    }
   }
 
   var W = canvas.width;
@@ -490,7 +502,7 @@
     var target = currentPlayerOffsetX();
     if (stairSlideStart === 0) return target;
     var t = (performance.now() - stairSlideStart) / STEP_ANIM_MS;
-    if (t >= 1) return target;
+    if (t >= 1) return gameState === "falling" ? stairSlideToOffsetX : target;
     if (t < 0) t = 0;
     var steppedT = Math.floor(t * STAIR_SLIDE_FRAMES) / STAIR_SLIDE_FRAMES;
     return stairSlideFromOffsetX + (stairSlideToOffsetX - stairSlideFromOffsetX) * steppedT;
@@ -498,7 +510,7 @@
 
   function animatedClimbY() {
     var climbed = playerPosition * STEP_HEIGHT;
-    if (stairSlideStart === 0) return climbed;
+    if (stairSlideStart === 0 || gameState === "falling") return climbed;
     var t = (performance.now() - stairSlideStart) / STEP_ANIM_MS;
     if (t >= 1) return climbed;
     if (t < 0) t = 0;
