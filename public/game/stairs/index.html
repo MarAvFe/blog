@@ -11,21 +11,34 @@
     padding: 0;
     background: #111;
     color: #111;
+    overflow-x: hidden;
   }
 
   #stairs-game-wrap {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.75rem;
+    width: 100%;
+    max-width: 480px;
     margin: 1rem auto;
+    padding: 0 0.5rem;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   }
 
+  #stairs-canvas-area {
+    position: relative;
+    width: 100%;
+  }
+
   #stairs-canvas {
+    box-sizing: border-box;
     background: #e0e0e0;
     border: 2px solid #111;
-    max-width: 100%;
+    width: 100%;
+    height: auto;
+    display: block;
     touch-action: none;
   }
 
@@ -48,19 +61,82 @@
     color: #fff;
   }
 
-  #stairs-restart {
-    font-family: monospace;
-    font-size: 0.95rem;
-    padding: 0.5rem 1.25rem;
-    background: #111;
-    color: #fff;
-    border: 2px solid #fff;
-    cursor: pointer;
+  #stairs-touch-controls {
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    bottom: 4%;
+    display: flex;
+    justify-content: center;
+    gap: 4%;
+    pointer-events: none;
   }
 
-  #stairs-restart:hover {
+  .stairs-touch-btn {
+    flex: 1;
+    max-width: 42%;
+    aspect-ratio: 1.6 / 1;
+    background: rgba(17, 17, 17, 0.85);
+    color: #fff;
+    border: 3px solid #fff;
+    border-radius: 12%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+    padding: 0;
+    pointer-events: auto;
+  }
+
+  .stairs-touch-btn svg {
+    width: 45%;
+    height: 45%;
+    stroke: #fff;
+    fill: none;
+    stroke-width: 3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  .stairs-touch-btn:active {
+    background: #fff;
+  }
+
+  .stairs-touch-btn:active svg {
+    stroke: #111;
+  }
+
+  #stairs-gameover-restart {
+    position: absolute;
+    left: 50%;
+    bottom: 4%;
+    transform: translateX(-50%);
+    font-family: monospace;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 0.75rem 2rem;
+    background: rgba(17, 17, 17, 0.9);
+    color: #fff;
+    border: 3px solid #fff;
+    border-radius: 8px;
+    cursor: pointer;
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+    display: none;
+  }
+
+  #stairs-gameover-restart:active {
     background: #fff;
     color: #111;
+  }
+
+  @media (min-width: 700px) {
+    #stairs-touch-controls {
+      display: none;
+    }
   }
 </style>
 </head>
@@ -72,8 +148,27 @@
     <span>Coins: <strong id="stairs-coins">0</strong></span>
     <span>Best: <strong id="stairs-best">0</strong></span>
   </div>
-  <canvas id="stairs-canvas" width="480" height="640"></canvas>
-  <button id="stairs-restart" type="button">Restart</button>
+  <div id="stairs-canvas-area">
+    <canvas id="stairs-canvas" width="480" height="640"></canvas>
+
+    <div id="stairs-touch-controls">
+      <button id="stairs-touch-turn" class="stairs-touch-btn" type="button" aria-label="Turn and climb">
+        <svg viewBox="0 0 24 24">
+          <path d="M4 12a8 8 0 1 1 2.5 5.8" />
+          <path d="M4 17v-5h5" />
+        </svg>
+      </button>
+      <button id="stairs-touch-climb" class="stairs-touch-btn" type="button" aria-label="Climb straight">
+        <svg viewBox="0 0 24 24">
+          <path d="M12 19V5" />
+          <path d="M5 12l7-7 7 7" />
+        </svg>
+      </button>
+    </div>
+
+    <button id="stairs-gameover-restart" type="button">Restart</button>
+  </div>
+
   <p id="stairs-help">
     <strong>A</strong> turn &amp; climb &nbsp;|&nbsp; <strong>D</strong> climb straight &nbsp;|&nbsp;
     match the next step's side before you commit.
@@ -89,14 +184,17 @@
   var scoreEl = document.getElementById("stairs-score");
   var bestEl = document.getElementById("stairs-best");
   var coinsEl = document.getElementById("stairs-coins");
-  var restartBtn = document.getElementById("stairs-restart");
+  var touchControlsEl = document.getElementById("stairs-touch-controls");
+  var touchTurnBtn = document.getElementById("stairs-touch-turn");
+  var touchClimbBtn = document.getElementById("stairs-touch-climb");
+  var gameoverRestartBtn = document.getElementById("stairs-gameover-restart");
 
   var CHUNK_SIZE = 1000;
   var GEN_THRESHOLD = 0.7;
   var STEP_HEIGHT = 64;
   var STEP_RUN = 90;
   var STEP_W = 70;
-  var STEP_H = 16;
+  var STEP_H = 40;
   var VISIBLE_ABOVE = 8;
   var VISIBLE_BELOW = 10;
   var BEST_KEY = "stairs_best_score";
@@ -284,6 +382,7 @@
     ensureStairs();
     playerFacing = stairArray[0];
     updateHud();
+    updateControlsVisibility();
   }
 
   function updateHud() {
@@ -352,7 +451,7 @@
   var FIGURE_LOCAL_FOOT_Y = 20;
   var FIGURE_GROUND_OVERLAP = 4;
   var STANDING_SURFACE_Y = H * 0.6;
-  var PLAYER_Y = STANDING_SURFACE_Y - STEP_H / 2 + FIGURE_GROUND_OVERLAP - FIGURE_LOCAL_FOOT_Y * FIGURE_SCALE;
+  var PLAYER_Y = STANDING_SURFACE_Y + FIGURE_GROUND_OVERLAP - FIGURE_LOCAL_FOOT_Y * FIGURE_SCALE;
 
   function stepScreenY(index) {
     var offset = index - (playerPosition - 1);
@@ -727,12 +826,19 @@
     ctx.strokeRect(barX, TIMER_BAR_Y, barWidth, TIMER_BAR_HEIGHT);
   }
 
+  function updateControlsVisibility() {
+    var isGameOver = gameState === "gameover";
+    touchControlsEl.style.display = isGameOver ? "none" : "";
+    gameoverRestartBtn.style.display = isGameOver ? "block" : "none";
+  }
+
   function tick(now) {
     updateTimer(now);
     if (gameState === "falling") {
       fallProgress++;
       if (fallProgress > 30) {
         gameState = "gameover";
+        updateControlsVisibility();
       }
     }
     if (gameState !== "gameover" || !gameOverRendered) {
@@ -763,9 +869,21 @@
     e.preventDefault();
   });
 
-  restartBtn.addEventListener("click", function () {
-    resetGame();
-  });
+  function bindTouchButton(el, action) {
+    el.addEventListener("touchstart", function (e) {
+      e.preventDefault();
+      action();
+    }, { passive: false });
+    el.addEventListener("click", function (e) {
+      e.preventDefault();
+      action();
+    });
+  }
+
+  bindTouchButton(gameoverRestartBtn, resetGame);
+
+  bindTouchButton(touchTurnBtn, turnAndClimb);
+  bindTouchButton(touchClimbBtn, attemptClimb);
 
   best = loadBest();
   coins = loadCoins();
