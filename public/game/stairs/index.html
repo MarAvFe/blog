@@ -873,14 +873,55 @@
     ctx.restore();
   }
 
-  var SKY_COLOR = "#8fd3f4";
-  var SEA_COLOR = "#2f7cc9";
-  var SAND_COLOR = "#e8d29a";
   var CLOUD_SPACING = 220;
   var CLOUD_ROW_SPACING = 130;
 
-  function drawCloud(x, y) {
-    ctx.fillStyle = "rgba(255,255,255,0.9)";
+  var TIME_PERIODS = {
+    night: {
+      sky: "#2b1b4d",
+      skyHorizon: "#6a4e8f",
+      sea: "#132a52",
+      sand: "#8f8266",
+      cloudColor: "rgba(220,215,235,0.35)"
+    },
+    morning: {
+      sky: "#8fd3f4",
+      skyHorizon: "#8fd3f4",
+      sea: "#2f7cc9",
+      sand: "#e8d29a",
+      cloudColor: "rgba(255,255,255,0.9)"
+    },
+    sunset: {
+      sky: "#3b2350",
+      skyHorizon: "#e8703f",
+      sea: "#1f4a75",
+      sand: "#c9a06a",
+      cloudColor: "rgba(255,210,180,0.55)"
+    }
+  };
+
+  function bgOverrideFromQuery() {
+    try {
+      var params = new URLSearchParams(window.location.search);
+      var bg = params.get("bg");
+      return TIME_PERIODS.hasOwnProperty(bg) ? bg : null;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  var timePeriodOverride = bgOverrideFromQuery();
+
+  function currentTimePeriod() {
+    if (timePeriodOverride) return timePeriodOverride;
+    var hour = new Date().getHours();
+    if (hour >= 6 && hour < 14) return "morning";
+    if (hour >= 14 && hour < 18) return "sunset";
+    return "night";
+  }
+
+  function drawCloud(x, y, color) {
+    ctx.fillStyle = color;
     ctx.beginPath();
     ctx.arc(x, y, 14, 0, Math.PI * 2);
     ctx.arc(x + 16, y - 6, 17, 0, Math.PI * 2);
@@ -888,13 +929,100 @@
     ctx.fill();
   }
 
-  function drawSky(skyTop, skyBottom, bgScrollY) {
-    ctx.fillStyle = SKY_COLOR;
-    ctx.fillRect(0, skyTop, W, skyBottom - skyTop);
+  function drawSun(x, y) {
+    ctx.fillStyle = "#ffd23f";
+    ctx.beginPath();
+    ctx.arc(x, y, 26, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.strokeStyle = "rgba(255,210,63,0.6)";
+    ctx.lineWidth = 3;
+    for (var i = 0; i < 8; i++) {
+      var a = (i / 8) * Math.PI * 2;
+      var r1 = 32;
+      var r2 = 42;
+      ctx.beginPath();
+      ctx.moveTo(x + Math.cos(a) * r1, y + Math.sin(a) * r1);
+      ctx.lineTo(x + Math.cos(a) * r2, y + Math.sin(a) * r2);
+      ctx.stroke();
+    }
+  }
 
+  function drawMoon(x, y) {
+    ctx.save();
+    ctx.fillStyle = "#f5f1d6";
+    ctx.beginPath();
+    ctx.arc(x, y, 24, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.fillStyle = "#2b1b4d";
+    ctx.beginPath();
+    ctx.arc(x + 9, y - 6, 20, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawSeagull(x, y, scale) {
+    ctx.strokeStyle = "#333";
+    ctx.lineWidth = 2;
+    ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(x - 10 * scale, y);
+    ctx.quadraticCurveTo(x - 4 * scale, y - 6 * scale, x, y);
+    ctx.quadraticCurveTo(x + 4 * scale, y - 6 * scale, x + 10 * scale, y);
+    ctx.stroke();
+  }
+
+  function drawDolphin(x, y, t) {
+    var arc = Math.sin(t * Math.PI);
+    var dy = -arc * 60;
+    var angle = (t - 0.5) * 1.1;
+    ctx.save();
+    ctx.translate(x, y + dy);
+    ctx.rotate(angle);
+    ctx.fillStyle = "#3d5a7a";
+    ctx.beginPath();
+    ctx.moveTo(-30, 0);
+    ctx.quadraticCurveTo(-10, -16, 20, -6);
+    ctx.quadraticCurveTo(28, -3, 32, 2);
+    ctx.quadraticCurveTo(10, 4, -10, 10);
+    ctx.quadraticCurveTo(-24, 10, -30, 0);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(-4, -12);
+    ctx.lineTo(2, -24);
+    ctx.lineTo(8, -10);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(28, 1);
+    ctx.lineTo(38, -6);
+    ctx.lineTo(38, 6);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawSky(skyTop, skyBottom, bgScrollY, period) {
+    var theme = TIME_PERIODS[period];
     var visibleTop = Math.max(skyTop, 0);
     var visibleBottom = Math.min(skyBottom, H);
+
+    var grad = ctx.createLinearGradient(0, 0, 0, H);
+    grad.addColorStop(0, theme.sky);
+    grad.addColorStop(1, theme.skyHorizon);
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, skyTop, W, skyBottom - skyTop);
+
     if (visibleBottom <= visibleTop) return;
+
+    if (period === "morning") {
+      drawSun(W * 0.78, visibleTop + 90);
+      drawSeagull(W * 0.22, visibleTop + 70, 1);
+      drawSeagull(W * 0.3, visibleTop + 85, 0.8);
+      drawSeagull(W * 0.16, visibleTop + 110, 0.7);
+    } else if (period === "night") {
+      drawMoon(W * 0.78, visibleTop + 90);
+    }
 
     var rowOffset = bgScrollY % CLOUD_ROW_SPACING;
     var firstRow = Math.floor((visibleTop - 40 - skyTop + rowOffset) / CLOUD_ROW_SPACING) - 1;
@@ -904,13 +1032,13 @@
       if (y < visibleTop - 20 || y > visibleBottom + 20) continue;
       var colOffset = (row % 2 === 0) ? 0 : CLOUD_SPACING / 2;
       for (var col = -1; col * CLOUD_SPACING + colOffset < W + CLOUD_SPACING; col++) {
-        drawCloud(col * CLOUD_SPACING + colOffset, y);
+        drawCloud(col * CLOUD_SPACING + colOffset, y, theme.cloudColor);
       }
     }
   }
 
   function drawIslandAndTree(x, y) {
-    ctx.fillStyle = SAND_COLOR;
+    ctx.fillStyle = "#e8d29a";
     ctx.beginPath();
     ctx.ellipse(x, y, 34, 12, 0, 0, Math.PI * 2);
     ctx.fill();
@@ -929,10 +1057,21 @@
     ctx.fill();
   }
 
-  function drawSea(seaTop, seaBottom) {
-    ctx.fillStyle = SEA_COLOR;
+  var DOLPHIN_CYCLE_MS = 4500;
+  var DOLPHIN_JUMP_MS = 1400;
+
+  function drawSea(seaTop, seaBottom, period) {
+    var theme = TIME_PERIODS[period];
+    ctx.fillStyle = theme.sea;
     ctx.fillRect(0, seaTop, W, seaBottom - seaTop);
     drawIslandAndTree(CENTER_X + 70, seaTop + (seaBottom - seaTop) * 0.55);
+
+    if (period === "sunset") {
+      var cyclePos = (performance.now() % DOLPHIN_CYCLE_MS) / DOLPHIN_JUMP_MS;
+      if (cyclePos < 1) {
+        drawDolphin(CENTER_X - 90, seaTop + (seaBottom - seaTop) * 0.4, cyclePos);
+      }
+    }
   }
 
   function drawCrab(x, y) {
@@ -960,8 +1099,9 @@
     ctx.stroke();
   }
 
-  function drawSand(sandTop) {
-    ctx.fillStyle = SAND_COLOR;
+  function drawSand(sandTop, period) {
+    var theme = TIME_PERIODS[period];
+    ctx.fillStyle = theme.sand;
     ctx.fillRect(0, sandTop, W, H - sandTop);
     drawCrab(CENTER_X - 110, sandTop + (H - sandTop) * 0.5);
     drawCrab(CENTER_X + 130, sandTop + (H - sandTop) * 0.7);
@@ -969,17 +1109,18 @@
 
   function drawBackground() {
     var bgScrollY = animatedClimbY() * BG_SCROLL_RATIO;
+    var period = currentTimePeriod();
 
     var sandTop = STANDING_SURFACE_Y - 20 + bgScrollY;
     var seaTop = STANDING_SURFACE_Y - H * 0.2 + bgScrollY;
 
-    drawSky(-H, seaTop, bgScrollY);
+    drawSky(-H, seaTop, bgScrollY, period);
 
     if (seaTop < H) {
-      drawSea(Math.max(seaTop, -100), sandTop);
+      drawSea(Math.max(seaTop, -100), sandTop, period);
     }
     if (sandTop < H) {
-      drawSand(sandTop);
+      drawSand(sandTop, period);
     }
   }
 
