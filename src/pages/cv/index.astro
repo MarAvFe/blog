@@ -7,11 +7,27 @@ import Layout from '../../layouts/BlogPost.astro';
 	description="A list of things I've built"
 	pubDate={new Date('September 17 2026')}
 >
-	<ul>
+	<ul id="projects-list">
 		<li><a href="https://sanpedroenbus.vercel.app/es" target="_blank" rel="noopener noreferrer">San Pedro en Bus</a></li>
 		<li><a href="https://tejidosocialcr.netlify.app/" target="_blank" rel="noopener noreferrer">Tejido Social CR</a></li>
+		<li data-sneaky><a href="https://tejidosocialcr.netlify.app/iniciativas-colectivas/" target="_blank" rel="noopener noreferrer">Tejido Social CR — Iniciativas Colectivas</a></li>
 		<li><a href="https://github.com/MarAvFe/slimstream" target="_blank" rel="noopener noreferrer">Slimstream</a></li>
 		<li><a href="https://baldazo.vercel.app/" target="_blank" rel="noopener noreferrer">Baldazo</a></li>
 		<li><a href="https://blog.marcelloavila.com/game/stairs" target="_blank" rel="noopener noreferrer">Stairs (game)</a></li>
 	</ul>
 </Layout>
+
+<style>
+	li[data-sneaky] {
+		display: none;
+	}
+	#projects-list.show-sneaky li[data-sneaky] {
+		display: list-item;
+	}
+</style>
+
+<script>
+	if (new URLSearchParams(window.location.search).has('sneaky')) {
+		document.getElementById('projects-list')?.classList.add('show-sneaky');
+	}
+</script>

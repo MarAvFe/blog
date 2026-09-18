@@ -7,12 +7,7 @@ import { defineConfig, fontProviders } from 'astro/config';
 // https://astro.build/config
 export default defineConfig({
 	site: 'https://blog.marcelloavila.com',
-	integrations: [
-		mdx(),
-		sitemap({
-			filter: (page) => !page.includes('/cv/sneaky'),
-		}),
-	],
+	integrations: [mdx(), sitemap()],
 	fonts: [
 		{
 			provider: fontProviders.local(),
